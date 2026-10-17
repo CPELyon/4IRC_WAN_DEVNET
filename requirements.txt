@@ -1,0 +1,16 @@
+# Python 3.10 ou plus récent
+jinja2
+pyyaml
+netmiko
+ntc-templates
+napalm
+nornir
+nornir-utils
+nornir-netmiko
+nornir-napalm
+nornir-netbox
+pynetbox
+requests
+flask
+pytest
+yamllint

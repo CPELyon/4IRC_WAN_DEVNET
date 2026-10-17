@@ -1,0 +1,19 @@
+# Environnement Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Secrets
+.env
+
+# Sorties générées (on versionne les données et les templates, pas les résultats)
+config/*.cfg
+backups/*.cfg
+observability/*.json
+observability/events.log
+nornir.log
+
+# Éditeurs
+.vscode/
+.idea/

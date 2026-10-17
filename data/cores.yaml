@@ -1,0 +1,73 @@
+# Cœur national de la maquette CPE-NET, décrit dans un modèle neutre (sans syntaxe Cisco).
+# Exemple fourni aux étudiants : leurs fichiers de sites suivent les mêmes conventions.
+site: CORE
+role: core
+ospf:
+  process_id: 1
+  area: 0
+devices:
+  - hostname: CORE-1
+    platform: ios
+    model: c7200
+    loopback: 10.255.0.1/32
+    noc:
+      interface: GigabitEthernet0/0
+      ip: 172.16.100.60/26
+      vrrp:
+        group: 1
+        vip: 172.16.100.62
+        priority: 110
+        preempt: true
+    links:
+      - interface: Serial1/0
+        ip: 10.0.0.5/30
+        peer: R1-LYON
+      - interface: Serial1/1
+        ip: 10.0.0.13/30
+        peer: R1-MARS
+      - interface: Serial1/2
+        ip: 10.0.0.21/30
+        peer: R1-PARIS
+      - interface: Serial1/3
+        ip: 10.0.0.1/30
+        peer: CORE-2
+    admin_routes:
+      - prefix: 172.16.100.64/26
+        next_hop: 10.0.0.6
+      - prefix: 172.16.100.128/26
+        next_hop: 10.0.0.14
+      - prefix: 172.16.100.192/26
+        next_hop: 10.0.0.22
+
+  - hostname: CORE-2
+    platform: ios
+    model: c7200
+    loopback: 10.255.0.2/32
+    noc:
+      interface: GigabitEthernet0/0
+      ip: 172.16.100.61/26
+      vrrp:
+        group: 1
+        vip: 172.16.100.62
+        priority: 100
+        preempt: true
+    links:
+      - interface: Serial1/0
+        ip: 10.0.0.9/30
+        peer: R2-LYON
+      - interface: Serial1/1
+        ip: 10.0.0.17/30
+        peer: R2-MARS
+      - interface: Serial1/2
+        ip: 10.0.0.25/30
+        peer: R1-PARIS
+      - interface: Serial1/3
+        ip: 10.0.0.2/30
+        peer: CORE-1
+    admin_routes:
+      - prefix: 172.16.100.64/26
+        next_hop: 10.0.0.10
+      - prefix: 172.16.100.128/26
+        next_hop: 10.0.0.18
+      - prefix: 172.16.100.192/26
+        next_hop: 10.0.0.26
