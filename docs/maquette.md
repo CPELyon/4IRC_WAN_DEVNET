@@ -44,9 +44,10 @@ L'administration passe par un VLAN dédié en **routage statique, indépendant d
 | R1-LYON / R2-LYON / ESW-LYON | 172.16.100.126 / .125 / .124 |
 | R1-MARS / R2-MARS / ESW-MARS | 172.16.100.190 / .189 / .188 |
 | R1-PARIS / ESW-PARIS | 172.16.100.254 / .253 |
-| VM DEVNET | 172.16.100.2/26, routes 172.16.0.0/16 et 10.0.0.0/8 via 172.16.100.62 (voir TP-00) |
+| VM DEVNET | 172.16.100.2/26, routes 172.16.0.0/16 et 10.0.0.0/8 via 172.16.100.62 (déjà configuré, voir TP-00) |
 
 - Identifiants : `cisco` / `cisco` (enable : `cisco`).
+- VM DEVNET : `cpe` / `123`.
 - Dans vos scripts, lisez-les dans l'environnement :
 
 ```bash

@@ -21,7 +21,7 @@ Avant de commencer : lisez [docs/maquette.md](../docs/maquette.md) (topologie, a
 **Objectif** : à la fin, je code dans la VM depuis VS Code et j'enregistre mon travail dans Git.
 
 ### Découvrir
-1. Pré-requis : le [TP-00](../TP-00/README.md) est fait. Démarrez la maquette et la VM **depuis GNS3**, et vérifiez `ssh -p 2222 cpe@127.0.0.1`.
+1. Pré-requis : le [TP-00](../TP-00/README.md) est fait. Démarrez la maquette et la VM **depuis GNS3**, et vérifiez `ssh -p 2222 cpe@127.0.0.1` (mot de passe `123`).
 2. Depuis un terminal de votre PC, générez une paire de clés SSH :
    ```bash
    ssh-keygen -t ed25519 -C "prenom.nom@cpe.fr"
