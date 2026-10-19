@@ -1,24 +1,31 @@
-# Cœur national de la maquette CPE-NET, décrit dans un modèle neutre (sans syntaxe Cisco).
-# Exemple fourni aux étudiants : leurs fichiers de sites suivent les mêmes conventions.
-site: CORE
-role: core
-ospf:
-  process_id: 1
-  area: 0
-devices:
+# Cœur national et NOC de la maquette CPE-NET, décrits avec le même modèle que les sites (docs/modele-donnees.md).
+# Fourni et déjà configuré : seul scripts/render_core.py l'utilise. En plus des sites : ospf et admin_routes.
+site: CPE-CORE
+code: core
+
+switches:
+  - hostname: ESW-NOC
+    platform: ios
+    model: c3725
+    trunks: []
+    access_ports:
+      - interface: FastEthernet1/0     # CORE-1
+        vlan: 1
+      - interface: FastEthernet1/1     # CORE-2
+        vlan: 1
+      - interface: FastEthernet1/2     # PC-ADMIN
+        vlan: 1
+      - interface: FastEthernet1/3     # VM DEVNET
+        vlan: 1
+
+routers:
   - hostname: CORE-1
     platform: ios
     model: c7200
     loopback: 10.255.0.1/32
-    noc:
-      interface: GigabitEthernet0/0
-      ip: 172.16.100.60/26
-      vrrp:
-        group: 1
-        vip: 172.16.100.62
-        priority: 110
-        preempt: true
-    links:
+    lan_interface: GigabitEthernet0/0
+    vrrp_priority: 110
+    wan:
       - interface: Serial1/0
         ip: 10.0.0.5/30
         peer: R1-LYON
@@ -27,31 +34,42 @@ devices:
         peer: R1-MARS
       - interface: Serial1/2
         ip: 10.0.0.21/30
-        peer: R1-PARIS
+        peer: R1-PARS
       - interface: Serial1/3
         ip: 10.0.0.1/30
         peer: CORE-2
+    ips:
+      1: 172.16.100.60/26
     admin_routes:
       - prefix: 172.16.100.64/26
         next_hop: 10.0.0.6
+        name: ADMIN-LYON
+      - prefix: 172.16.100.64/26
+        next_hop: 10.0.0.2
+        distance: 250
+        name: ADMIN-LYON-SECOURS
       - prefix: 172.16.100.128/26
         next_hop: 10.0.0.14
+        name: ADMIN-MARS
+      - prefix: 172.16.100.128/26
+        next_hop: 10.0.0.2
+        distance: 250
+        name: ADMIN-MARS-SECOURS
       - prefix: 172.16.100.192/26
         next_hop: 10.0.0.22
+        name: ADMIN-PARS
+      - prefix: 172.16.100.192/26
+        next_hop: 10.0.0.2
+        distance: 250
+        name: ADMIN-PARS-SECOURS
 
   - hostname: CORE-2
     platform: ios
     model: c7200
     loopback: 10.255.0.2/32
-    noc:
-      interface: GigabitEthernet0/0
-      ip: 172.16.100.61/26
-      vrrp:
-        group: 1
-        vip: 172.16.100.62
-        priority: 100
-        preempt: true
-    links:
+    lan_interface: GigabitEthernet0/0
+    vrrp_priority: 100
+    wan:
       - interface: Serial1/0
         ip: 10.0.0.9/30
         peer: R2-LYON
@@ -60,14 +78,29 @@ devices:
         peer: R2-MARS
       - interface: Serial1/2
         ip: 10.0.0.25/30
-        peer: R1-PARIS
+        peer: R1-PARS
       - interface: Serial1/3
         ip: 10.0.0.2/30
         peer: CORE-1
+    ips:
+      1: 172.16.100.61/26
     admin_routes:
       - prefix: 172.16.100.64/26
         next_hop: 10.0.0.10
+        name: ADMIN-LYON
       - prefix: 172.16.100.128/26
         next_hop: 10.0.0.18
+        name: ADMIN-MARS
       - prefix: 172.16.100.192/26
         next_hop: 10.0.0.26
+        name: ADMIN-PARS
+
+vlans:
+  - id: 1
+    name: noc
+    subnet: 172.16.100.0/26
+    gateway: 172.16.100.62           # VIP VRRP du NOC
+
+ospf:
+  process_id: 1
+  area: 0

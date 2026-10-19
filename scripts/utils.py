@@ -17,10 +17,10 @@ def load_yaml(path):
     - Si le YAML est invalide : afficher le message d'erreur et retourner None.
 
     >>> data = load_yaml("data/cores.yaml")
-    >>> data["devices"][0]["hostname"]
+    >>> data["routers"][0]["hostname"]
     'CORE-1'
     """
-    raise NotImplementedError("TP-01, module 4")
+    raise NotImplementedError("TP-01, module 3")
 
 
 def save_text(path, content):

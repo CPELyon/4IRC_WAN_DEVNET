@@ -1,4 +1,4 @@
-"""TP-01, module 4 : afficher un résumé d'un site décrit en YAML.
+"""TP-01, module 3 : afficher un résumé d'un site décrit en YAML.
 
     python -m scripts.tp1_summary data/lyon.yaml
 
@@ -20,7 +20,7 @@ def summarize(site):
     Indices : len(), une boucle for sur site["vlans"] et site["routers"], une f-string par ligne.
     Un site a du VRRP s'il a plus d'un routeur.
     """
-    raise NotImplementedError("TP-01, module 4")
+    raise NotImplementedError("TP-01, module 3")
 
 
 if __name__ == "__main__":

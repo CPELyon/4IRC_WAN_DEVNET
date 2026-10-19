@@ -6,7 +6,7 @@ framework du Network Automation Forum (NAF).
 
 | Séance | Bloc NAF | Sujet |
 |---|---|---|
-| Avant la 1 | — | [TP-00 — Préparer son environnement](TP-00/README.md) (GNS3, VM, réseau) |
+| 1 | — | [TP-00 — Préparer son environnement](TP-00/README.md) (GNS3, VM, Git), en début de séance |
 | 1 | Intention | TP-01 — Décrire le réseau |
 | 2 | Intention | TP-02 — Générer les configurations |
 | 3 | Exécuteur | TP-03 — Appliquer l'état voulu |
@@ -15,7 +15,7 @@ framework du Network Automation Forum (NAF).
 | 6 | Observabilité + Orchestrateur | TP-06 — Détecter les écarts, orchestrer |
 | 7 | Présentation | TP-07 — Une API pour piloter le réseau |
 
-**Commencez par le TP-00**, à faire avant la séance 1 : il se lit directement sur GitHub.
+**Commencez par le TP-00**, en début de séance 1 : il se lit directement sur GitHub.
 
 Le dépôt grandit au fil des séances : chaque sujet `TP-0N/`, ses squelettes de code et la correction
 de la séance précédente sont publiés au début de la séance.
@@ -43,9 +43,9 @@ de la séance précédente sont publiés au début de la séance.
 ## Deux dépôts : `upstream` et `origin`
 
 - **`upstream`** : le dépôt de l'enseignant, https://github.com/CPELyon/4IRC_WAN_DEVNET. Vous le lisez, vous n'y poussez jamais.
-- **`origin`** : votre dépôt, privé. Vous y poussez votre travail, en SSH ou en HTTPS avec un jeton (au choix, voir TP-01).
+- **`origin`** : votre dépôt, privé, nommé `4IRC_WAN_DEVNET_NOM_PRENOM`. Vous y poussez votre travail, en SSH ou en HTTPS avec un jeton (au choix, voir TP-00).
 
-La mise en place est décrite dans le TP-01 (module 1). Ensuite, **au début de chaque séance** :
+La mise en place est décrite dans le TP-00 (étape 5). Ensuite, **au début de chaque séance** :
 
 ```bash
 git pull --no-edit upstream main     # récupère le nouveau sujet, les squelettes et la correction
@@ -66,6 +66,7 @@ git push                   # les range aussi dans votre dépôt
   Ils peuvent être mis à jour, et vos modifications créeraient des conflits au `git pull --no-edit upstream main`.
 - Vos notes et comptes rendus vont dans **vos** fichiers (par ex. `TP-01/notes-lyon.txt`).
 - Les squelettes (`scripts/`, `templates/`, `tests/`…) sont à vous : l'enseignant n'y touche plus une fois publiés.
+- Les fichiers d'un nouveau TP arrivent **directement à leur place** (`scripts/`, `tests/`, `inventory/`…) et n'écrasent jamais les vôtres. Seule condition : vos fichiers `data/*.yaml` doivent rester conformes à [docs/modele-donnees.md](docs/modele-donnees.md).
 
 ## Si vous avez décroché
 

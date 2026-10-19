@@ -1,35 +1,36 @@
 {# Exemple fourni : configuration d'un routeur du cœur à partir de data/cores.yaml.
-    Données attendues : device (un élément de devices) et ospf (bloc ospf du fichier). #}
-hostname {{ device.hostname }}
+   Données attendues : router (un élément de routers), vlans et ospf (blocs du fichier). #}
+hostname {{ router.hostname }}
 !
 interface Loopback0
  description Router-ID
- ip address {{ device.loopback | ip_addr }} {{ device.loopback | netmask }}
+ ip address {{ router.loopback | ip_addr }} {{ router.loopback | netmask }}
 !
-interface {{ device.noc.interface }}
- description NOC (administration)
- ip address {{ device.noc.ip | ip_addr }} {{ device.noc.ip | netmask }}
- vrrp {{ device.noc.vrrp.group }} ip {{ device.noc.vrrp.vip }}
- vrrp {{ device.noc.vrrp.group }} priority {{ device.noc.vrrp.priority }}
-{% if device.noc.vrrp.preempt %}
- vrrp {{ device.noc.vrrp.group }} preempt
-{% endif %}
+{% for vlan in vlans %}
+interface {{ router.lan_interface }}
+ description {{ vlan.name | upper }} (administration)
+ ip address {{ router.ips[vlan.id] | ip_addr }} {{ router.ips[vlan.id] | netmask }}
+ vrrp {{ vlan.id }} description Passerelle {{ vlan.name | upper }}
+ vrrp {{ vlan.id }} ip {{ vlan.gateway }}
+ vrrp {{ vlan.id }} priority {{ router.vrrp_priority }}
+ vrrp {{ vlan.id }} preempt
  no shutdown
 !
-{% for link in device.links %}
+{% endfor %}
+{% for link in router.wan %}
 interface {{ link.interface }}
- description {{ link.peer }}
+ description {{ link.peer }} (WAN)
  ip address {{ link.ip | ip_addr }} {{ link.ip | netmask }}
  no shutdown
 !
 {% endfor %}
 router ospf {{ ospf.process_id }}
- router-id {{ device.loopback | ip_addr }}
- passive-interface {{ device.noc.interface }}
+ router-id {{ router.loopback | ip_addr }}
+ passive-interface {{ router.lan_interface }}
  passive-interface Loopback0
  network 10.0.0.0 0.0.0.255 area {{ ospf.area }}
  network 10.255.0.0 0.0.0.255 area {{ ospf.area }}
 !
-{% for route in device.admin_routes %}
-ip route {{ route.prefix | ip_addr }} {{ route.prefix | netmask }} {{ route.next_hop }}
+{% for route in router.admin_routes %}
+ip route {{ route.prefix | network }} {{ route.prefix | netmask }} {{ route.next_hop }}{% if route.distance %} {{ route.distance }}{% endif %} name {{ route.name }}
 {% endfor %}

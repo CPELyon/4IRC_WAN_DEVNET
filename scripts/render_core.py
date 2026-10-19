@@ -12,7 +12,7 @@ if __name__ == "__main__":
     with open("data/cores.yaml") as f:
         cores = yaml.safe_load(f)
     template = get_jinja_env().get_template("core_router.j2")
-    for device in cores["devices"]:
-        config = template.render(device=device, ospf=cores["ospf"])
-        print(f"===== {device['hostname']} =====")
+    for router in cores["routers"]:
+        config = template.render(router=router, vlans=cores["vlans"], ospf=cores["ospf"])
+        print(f"===== {router['hostname']} =====")
         print(config)
