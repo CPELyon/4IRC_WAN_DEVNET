@@ -1,0 +1,55 @@
+---
+site: CPE-LYON
+code: lyon
+
+switches:
+  - hostname: ESW-LYON
+    platform: ios
+    model: c3725
+    trunks:
+      - FastEthernet1/0
+      - FastEthernet1/1
+    access_ports:
+      - interface: FastEthernet1/2
+        vlan: 10
+      - interface: FastEthernet1/3
+        vlan: 20
+
+routers:
+  - hostname: R1-LYON
+    platform: ios
+    model: c7200
+    loopback: 10.255.0.11/32
+    lan_interface: GigabitEthernet0/0
+    vrrp_priority: 110
+    wan:
+      - interface: Serial1/0
+        ip: 10.0.0.6/30
+        peer: CORE-1
+    ips:
+      10: 172.16.10.252/24
+      20: 172.16.20.252/24
+
+  - hostname: R2-LYON
+    platform: ios
+    model: c7200
+    loopback: 10.255.0.12/32
+    lan_interface: GigabitEthernet0/0
+    vrrp_priority: 100
+    wan:
+      - interface: Serial1/0
+        ip: 10.0.0.10/30
+        peer: CORE-2
+    ips:
+      10: 172.16.10.253/24
+      20: 172.16.20.253/24
+
+vlans:
+  - id: 10
+    name: teacher
+    subnet: 172.16.10.0/24
+    gateway: 172.16.X.254
+  - id: 20
+    name: student
+    subnet: 172.16.20.0/24
+    gateway: 172.16.20.254

@@ -1,0 +1,55 @@
+---
+site: CPE-MARS
+code: mars
+
+switches:
+  - hostname: ESW-MARS
+    platform: ios
+    model: c3725
+    trunks:
+      - FastEthernet1/0
+      - FastEthernet1/1
+    access_ports:
+      - interface: FastEthernet1/2
+        vlan: 10
+      - interface: FastEthernet1/3
+        vlan: 20
+
+routers:
+  - hostname: R1-MARS
+    platform: ios
+    model: c7200
+    loopback: 10.255.0.21/32
+    lan_interface: GigabitEthernet0/0
+    vrrp_priority: 110
+    wan:
+      - interface: Serial1/0
+        ip: 10.0.0.14/30
+        peer: CORE-1
+    ips:
+      10: 172.16.30.252/24
+      20: 172.16.40.252/24
+
+  - hostname: R2-MARS
+    platform: ios
+    model: c7200
+    loopback: 10.255.0.22/32
+    lan_interface: GigabitEthernet0/0
+    vrrp_priority: 100
+    wan:
+      - interface: Serial1/0
+        ip: 10.0.0.18/30
+        peer: CORE-2
+    ips:
+      10: 172.16.30.253/24
+      20: 172.16.40.253/24
+
+vlans:
+  - id: 10
+    name: teacher
+    subnet: 172.16.30.0/24
+    gateway: 172.16.30.254
+  - id: 20
+    name: student
+    subnet: 172.16.40.0/24
+    gateway: 172.16.40.254
