@@ -9,21 +9,28 @@
 
 ## 1. Installer les logiciels
 
-1. **VirtualBox** : https://www.virtualbox.org (version standard).
+1. **VirtualBox** : https://www.virtualbox.org (version standard). **Pas sous Linux** (voir l'encadré ci-dessous).
 2. **GNS3 2.2.49** : https://www.gns3.com, version « all-in-one ». Gardez les options par défaut (Npcap compris sous Windows).
    Au premier lancement, choisissez **« Run appliances on my local computer »** (pas de GNS3 VM).
 3. **VS Code** : https://code.visualstudio.com (l'extension Remote - SSH s'installe à l'étape 5.2).
 4. **Client SSH** : déjà présent sous Windows 10/11, macOS et Linux. Vérifiez dans un terminal : `ssh -V`.
 
+> 🐧 **Sous Linux** : n'installez pas VirtualBox. Un projet GNS3 dédié contient déjà la maquette **et** la VM DEVNET :
+> il suffit de l'importer puis de le démarrer (sections 2 et 3).
+
 
 ## 2. Importer la VM et la maquette
 
 > ⚠️ Ne démarrez pas la VM depuis VirtualBox ⚠️
-1. **La VM** : VirtualBox › **Fichier › Importer un appareil virtuel** › `devnet.ova` (lien sur e-campus).
+1. **La VM** : VirtualBox › **Fichier › Importer un appareil virtuel** › `devnet.ova` (partage de fichiers du cours, lien donné par l'intervenant).
 
    Tout est déjà réglé dans la VM : la carte n°1 en NAT avec l'accès depuis votre PC (SSH sur le port 2222, NetBox sur le port 8000), la carte n°2 prête pour GNS3.
 
-2. **La maquette** : GNS3 › **File › Import portable project** › `4IRC_WAN_DEVNET.gns3project` (lien sur e-campus).
+2. **La maquette** : GNS3 › **File › Import portable project** › `4IRC_WAN_DEVNET.gns3project` (même partage de fichiers).
+
+> 🐧 **Sous Linux**, à la place des étapes 1 et 2 : pas d'OVA. GNS3 › **File › Import portable project** ›
+> `4IRC_WAN_DEVNET-linux.gns3project` (même partage de fichiers, ≈ 730 Mo). Ce projet contient la maquette **et** la VM DEVNET,
+> déjà réglée et déjà câblée. L'import prend un peu de temps : patientez.
 
 ## 3. Brancher la VM sur la maquette
 
@@ -34,6 +41,13 @@
 4. Démarrez **tous** les équipements (▶ vert), y compris la VM, puis attendez 2 minutes.
 
 > ⚠️ Démarrez toujours la VM **depuis GNS3**, jamais directement depuis VirtualBox.
+
+> 🐧 **Sous Linux**, à la place des étapes 1 à 3 ci-dessus : **il n'y a rien à configurer**. La VM `devnet` est déjà dans le projet et déjà câblée.
+> Démarrez simplement **tous** les équipements (▶ vert), y compris `devnet`, puis attendez 2 minutes.
+>
+> ⚠️ **Si GNS3 affiche une erreur** (au démarrage de `devnet` ou de la maquette) : ne modifiez aucun réglage, **appelez l'intervenant**.
+>
+> La suite du TP (à partir de la section 4) est **identique** sous Windows et sous Linux.
 
 ## 4. Vérifier
 
@@ -197,4 +211,5 @@ Votre dossier local va être relié à **deux** dépôts distants :
 
 - **`ssh -p 2222` refusé** : la VM n'a pas fini de démarrer (attendez 1 minute), ou elle a été lancée depuis VirtualBox au lieu de GNS3.
 - **La VM ne démarre pas depuis GNS3** : vérifiez qu'elle est arrêtée dans VirtualBox, puis relancez-la depuis GNS3.
+- 🐧 **Linux : une erreur s'affiche dans GNS3** : appelez l'intervenant.
 - Pour tout autre problème, sollicitez l'intervenant.
