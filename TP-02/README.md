@@ -100,7 +100,7 @@ print(t.render(name="GigabitEthernet0/0.10", desc="VLAN teacher"))
 - `pytest tests/test_render.py -v` passe. 👀 Ouvrez `tests/test_render.py` : que vérifie ce test, et pourquoi tourne-t-il une fois par site (`parametrize`) ?
 
 ### Comprendre
-- Pour ajouter un 4e site, que faut-il modifier ? (Réponse attendue : un fichier de données, rien d'autre.)
+- Pour ajouter un 4e site, que faut-il modifier ?
 - Dans un template, pourquoi éviter `{% if router.hostname == "R1-LYON" %}` ?
 
 ✅ **Point de contrôle** : faites vérifier vos templates et le résultat pour Paris.
@@ -121,7 +121,7 @@ print(t.render(name="GigabitEthernet0/0.10", desc="VLAN teacher"))
 - Test de bascule comme au TP-01.
 
 ### Comprendre
-- Le copier-coller est-il une bonne méthode pour 50 sites ? Que manque-t-il ? (→ séance 3 : l'exécuteur)
+- Le copier-coller est-il une bonne méthode pour 50 sites ? Que manque-t-il ?
 
 ✅ **Fin de séance** : `git commit -m "TP2 : templates et configs générées"` puis `git push`.
 Paris est généré mais **pas appliqué** : ce sera le travail de l'exécuteur au TP-03.
