@@ -1,0 +1,22 @@
+{# Configuration d'un switch de site (correction TP-02).
+   Données attendues : site (pour les VLANs) et switch (un élément de site.switches). #}
+hostname {{ switch.hostname }}
+!
+{% for vlan in site.vlans %}
+vlan {{ vlan.id }}
+ name {{ vlan.name }}
+{% endfor %}
+exit
+!
+{% for port in switch.access_ports %}
+interface {{ port.interface }}
+ switchport mode access
+ switchport access vlan {{ port.vlan }}
+ no shutdown
+!
+{% endfor %}
+{% for trunk in switch.trunks %}
+interface {{ trunk }}
+ switchport mode trunk
+!
+{% endfor %}

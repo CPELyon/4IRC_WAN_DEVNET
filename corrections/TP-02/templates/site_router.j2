@@ -1,0 +1,18 @@
+{# Configuration d'un routeur de site (correction TP-02).
+   Données attendues : site (VLANs, nombre de routeurs) et router (un élément de site.routers).
+   Le VRRP n'est généré que si le site a deux routeurs : on le déduit, on ne le stocke pas. #}
+{% set vrrp = site.routers | length > 1 %}
+hostname {{ router.hostname }}
+!
+{% for vlan in site.vlans %}
+interface {{ router.lan_interface }}.{{ vlan.id }}
+ encapsulation dot1Q {{ vlan.id }}
+ ip address {{ router.ips[vlan.id] | ip_addr }} {{ router.ips[vlan.id] | netmask }}
+{% if vrrp %}
+ vrrp {{ vlan.id }} ip {{ vlan.gateway }}
+ vrrp {{ vlan.id }} priority {{ router.vrrp_priority }}
+ vrrp {{ vlan.id }} preempt
+{% endif %}
+ no shutdown
+!
+{% endfor %}
