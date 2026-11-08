@@ -1,0 +1,29 @@
+{# Configuration d'un switch de site (correction TP-03).
+   Données attendues : site (pour les VLANs) et switch (un élément de site.switches).
+   TP-03 : un port d'accès reprend la description de son VLAN, s'il en a une
+   (seul Marseille en a pour l'instant : Lyon et Paris ne changent pas). #}
+hostname {{ switch.hostname }}
+!
+{% for vlan in site.vlans %}
+vlan {{ vlan.id }}
+ name {{ vlan.name }}
+{% endfor %}
+exit
+!
+{% for port in switch.access_ports %}
+{# Le VLAN du port : celui de site.vlans dont l'id vaut port.vlan #}
+{% set vlan = site.vlans | selectattr("id", "equalto", port.vlan) | first %}
+interface {{ port.interface }}
+{% if vlan.description %}
+ description {{ vlan.description }}
+{% endif %}
+ switchport mode access
+ switchport access vlan {{ port.vlan }}
+ no shutdown
+!
+{% endfor %}
+{% for trunk in switch.trunks %}
+interface {{ trunk }}
+ switchport mode trunk
+!
+{% endfor %}

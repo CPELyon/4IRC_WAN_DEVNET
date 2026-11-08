@@ -1,0 +1,18 @@
+# Inventaire Nornir (TP-04) : le cœur est fourni, complétez les sites.
+CORE-1:
+  hostname: 172.16.100.60
+  groups: [core]
+
+CORE-2:
+  hostname: 172.16.100.61
+  groups: [core]
+
+R1-LYON:
+  hostname: 172.16.100.126
+  groups: [site_router, lyon]
+
+ESW-LYON:
+  hostname: 172.16.100.124
+  groups: [switch, lyon]
+
+# À compléter : R2-LYON, ESW-LYON, puis Marseille et Paris
