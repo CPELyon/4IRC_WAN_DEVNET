@@ -13,7 +13,7 @@ framework du Network Automation Forum (NAF).
 | 4 | Exécuteur + Collecteur | TP-04 — Passer à l'échelle, lire l'état réel |
 | 5 | Intention (source de vérité) | TP-05 — NetBox |
 | 6 | Observabilité + Orchestrateur | TP-06 — Détecter les écarts, orchestrer |
-| 7 | Présentation | TP-07 — Une API pour piloter le réseau |
+| 7 | Tous les blocs | TP-07 — L'épreuve : toute la chaîne |
 
 **Commencez par le TP-00**, en début de séance 1 : il se lit directement sur GitHub.
 
@@ -34,7 +34,6 @@ de la séance précédente sont publiés au début de la séance.
 ├── scripts/         votre code Python (squelettes fournis séance par séance)
 ├── tests/           les tests automatiques (pytest)
 ├── observability/   l'historique des collectes et les événements (séance 6)
-├── api/             l'API Flask (séance 7)
 ├── ci/              la pipeline CI GitHub Actions fournie (séance 6)
 ├── corrections/     les corrections, publiées après chaque séance
 └── docs/            la maquette, le plan d’adressage, le modèle de données
