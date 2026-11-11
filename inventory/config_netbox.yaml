@@ -1,0 +1,15 @@
+# Configuration Nornir avec NetBox comme inventaire (TP-05, module 5)
+# Le jeton n'est pas ici : le plugin le lit dans la variable d'environnement NB_TOKEN (fichier .env).
+# Les hôtes, leur IP (IP principale = IP d'administration), leur site et leur rôle viennent de NetBox.
+inventory:
+  plugin: NetBoxInventory2
+  options:
+    nb_url: "http://localhost:8000"
+    filter_parameters:
+      status: active        # un équipement passé hors service dans NetBox (Offline, Planned…) sort de l'inventaire
+runner:
+  plugin: threaded
+  options:
+    num_workers: 10
+logging:
+  log_file: nornir.log

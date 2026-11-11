@@ -1,0 +1,39 @@
+# Groupes Nornir (TP-04) : la plateforme commune, puis un groupe par rôle et par site. (correction)
+ios:
+  platform: ios
+  connection_options:
+    netmiko:
+      platform: cisco_ios
+    napalm:
+      platform: ios
+
+core:
+  groups: [ios]
+  data:
+    role: core
+    read_only: true      # le cœur est fourni : on le lit, on ne le modifie jamais
+
+site_router:
+  groups: [ios]
+  data:
+    role: site_router
+
+switch:
+  groups: [ios]
+  data:
+    role: switch
+
+lyon:
+  data:
+    site: CPE-LYON
+    data_file: data/lyon.yaml
+
+mars:
+  data:
+    site: CPE-MARS
+    data_file: data/mars.yaml
+
+pars:
+  data:
+    site: CPE-PARS
+    data_file: data/pars.yaml

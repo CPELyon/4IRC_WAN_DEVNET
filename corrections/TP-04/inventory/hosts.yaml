@@ -1,0 +1,41 @@
+# Inventaire Nornir (TP-04) : le cœur est fourni, complétez les sites. (correction)
+# hostname = l'adresse à joindre (IP d'administration, docs/maquette.md), pas le nom de l'équipement.
+CORE-1:
+  hostname: 172.16.100.60
+  groups: [core]
+
+CORE-2:
+  hostname: 172.16.100.61
+  groups: [core]
+
+R1-LYON:
+  hostname: 172.16.100.126
+  groups: [site_router, lyon]
+
+R2-LYON:
+  hostname: 172.16.100.125
+  groups: [site_router, lyon]
+
+ESW-LYON:
+  hostname: 172.16.100.124
+  groups: [switch, lyon]
+
+R1-MARS:
+  hostname: 172.16.100.190
+  groups: [site_router, mars]
+
+R2-MARS:
+  hostname: 172.16.100.189
+  groups: [site_router, mars]
+
+ESW-MARS:
+  hostname: 172.16.100.188
+  groups: [switch, mars]
+
+R1-PARS:
+  hostname: 172.16.100.254
+  groups: [site_router, pars]
+
+ESW-PARS:
+  hostname: 172.16.100.253
+  groups: [switch, pars]

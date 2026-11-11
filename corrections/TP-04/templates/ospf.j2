@@ -1,0 +1,17 @@
+{# OSPF d'un routeur de site (correction TP-04).
+   Données attendues : les mêmes que site_router.j2, site (le fichier du site) et router (un élément de site.routers).
+   Tout vient des YAML existants : WAN, loopback et VLANs. Le VLAN 99 d'administration n'y est pas :
+   il reste en routage statique, indépendant d'OSPF. #}
+router ospf 1
+ router-id {{ router.loopback | ip_addr }}
+ passive-interface Loopback0
+{% for vlan in site.vlans %}
+ passive-interface {{ router.lan_interface }}.{{ vlan.id }}
+{% endfor %}
+{% for link in router.wan %}
+ network {{ link.ip | network }} {{ link.ip | wildcard }} area 0
+{% endfor %}
+ network {{ router.loopback | network }} {{ router.loopback | wildcard }} area 0
+{% for vlan in site.vlans %}
+ network {{ vlan.subnet | network }} {{ vlan.subnet | wildcard }} area 0
+{% endfor %}
